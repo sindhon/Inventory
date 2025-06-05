@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class UIManager : MonoBehaviour
@@ -7,13 +5,23 @@ public class UIManager : MonoBehaviour
     private static UIManager instance;
     public static UIManager Instance { get { return instance; } }
 
-    [SerializeField] private GameObject UIMainMenu;
-    [SerializeField] private GameObject UIStatus;
-    [SerializeField] private GameObject UIInventory;
+    [SerializeField] private UIMainMenu uIMainMenu;
+    [SerializeField] private UIStatus uIStatus;
+    [SerializeField] private UIInventory uIInventory;
+
+    public UIMainMenu UIMainMenu => uIMainMenu;
+    public UIStatus UIStatus => uIStatus;
+    public UIInventory UIInventory => uIInventory;
 
     private void Awake()
     {
         if (instance == null)
+        {
             instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 }
