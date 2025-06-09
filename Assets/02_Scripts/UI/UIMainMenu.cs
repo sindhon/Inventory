@@ -25,11 +25,6 @@ public class UIMainMenu : MonoBehaviour
         GameManager.Instance.Player.OnInfoChanged += SetPlayerInfo;
     }
 
-    private void OnDisable()
-    {
-        GameManager.Instance.Player.OnInfoChanged -= SetPlayerInfo;
-    }
-
     #region UI 전환
     public void OpenMainMenu()
     {

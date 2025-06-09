@@ -164,7 +164,6 @@ public class UIInventory : MonoBehaviour
             {
                 case ItemStatType.Attack:
                     GameManager.Instance.Player.AddAttack(value);
-                    Debug.Log($"공격력 +{value}");
                     break;
                 case ItemStatType.Defense:
                     GameManager.Instance.Player.AddDefense(value);
