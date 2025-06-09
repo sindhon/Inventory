@@ -24,4 +24,11 @@ public class UIManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    private void Start()
+    {
+        UIMainMenu.gameObject.SetActive(true);
+        UIStatus.gameObject.SetActive(false);
+        UIInventory.gameObject.SetActive(false);
+    }
 }

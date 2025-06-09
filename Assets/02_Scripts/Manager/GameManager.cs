@@ -17,10 +17,7 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-    }
 
-    private void Start()
-    {
         SetData("Sin", 1, 0, 3, 5, 5, 10, 2);
     }
 
@@ -29,8 +26,13 @@ public class GameManager : MonoBehaviour
     {
         if (Player == null)
         {
-            GameObject playerObj = new GameObject("Player");
-            Player = playerObj.AddComponent<Character>();
+            Player = FindObjectOfType<Character>();
+
+            if (Player == null)
+            {
+                GameObject playerObj = new GameObject("Player");
+                Player = playerObj.AddComponent<Character>();
+            }
         }
 
         Player.Init(name, level, exp, requiredExp, attack, defense, hp, crit);
