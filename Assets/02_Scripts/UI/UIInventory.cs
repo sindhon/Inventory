@@ -107,12 +107,13 @@ public class UIInventory : MonoBehaviour
     {
         if (slots[index].item == null) return;
 
-        if (selectedItemIndex == index )
+        if (selectedItemIndex == index)
         {
             if (slots[index].Equipped)
             {
                 UnEquip(index);
                 curEquipIndexes.Remove(index);
+                slots[selectedItemIndex].EquipText.gameObject.SetActive(false);
                 selectedItemIndex = -1;
                 selectedItem = null;
             }
@@ -124,8 +125,15 @@ public class UIInventory : MonoBehaviour
             return;
         }
 
+        if (selectedItemIndex != -1)
+        {
+            slots[selectedItemIndex].EquipText.gameObject.SetActive(false);
+        }
+
         selectedItem = slots[index].item;
         selectedItemIndex = index;
+        slots[selectedItemIndex].EquipText.gameObject.SetActive(true);
+        UpdateUI();
     }
     #endregion
 
