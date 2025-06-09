@@ -154,12 +154,56 @@ public class UIInventory : MonoBehaviour
         slots[selectedItemIndex].Equipped = true;
         curEquipIndexes.Add(selectedItemIndex);
         UpdateUI();
+
+        // 장비 스텟 적용
+        var equipItem = slots[selectedItemIndex].item;
+        for (int i = 0; i < equipItem.stats.Length; i++)
+        {
+            float value = equipItem.stats[i].value;
+            switch (equipItem.stats[i].type)
+            {
+                case ItemStatType.Attack:
+                    GameManager.Instance.Player.AddAttack(value);
+                    Debug.Log($"공격력 +{value}");
+                    break;
+                case ItemStatType.Defense:
+                    GameManager.Instance.Player.AddDefense(value);
+                    break;
+                case ItemStatType.Hp:
+                    GameManager.Instance.Player.AddHp(value);
+                    break;
+                case ItemStatType.Crit:
+                    GameManager.Instance.Player.AddCrit(value);
+                    break;
+            }
+        }
     }
 
     void UnEquip(int index)
     {
         slots[index].Equipped = false;
         UpdateUI();
+
+        // 장비 스텟 해제
+        var equipItem = slots[index].item;
+        for (int i = 0; i < equipItem.stats.Length; i++)
+        {
+            switch (equipItem.stats[i].type)
+            {
+                case ItemStatType.Attack:
+                    GameManager.Instance.Player.RemoveAttack(equipItem.stats[i].value);
+                    break;
+                case ItemStatType.Defense:
+                    GameManager.Instance.Player.RemoveDefense(equipItem.stats[i].value);
+                    break;
+                case ItemStatType.Hp:
+                    GameManager.Instance.Player.RemoveHp(equipItem.stats[i].value);
+                    break;
+                case ItemStatType.Crit:
+                    GameManager.Instance.Player.RemoveCrit(equipItem.stats[i].value);
+                    break;
+            }
+        }
     }
     #endregion
 }

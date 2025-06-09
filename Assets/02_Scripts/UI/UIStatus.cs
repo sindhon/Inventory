@@ -19,11 +19,6 @@ public class UIStatus : MonoBehaviour
         GameManager.Instance.Player.OnStatChanged += SetPlayerInfo;
     }
 
-    private void OnDisable()
-    {
-        GameManager.Instance.Player.OnStatChanged -= SetPlayerInfo;
-    }
-
     public void CloseStatusUI()
     {
         gameObject.SetActive(false);

@@ -40,6 +40,7 @@ public class UIMainMenu : MonoBehaviour
     public void OpenStatus()
     {
         UIManager.Instance.UIStatus.gameObject.SetActive(true);
+        GameManager.Instance.Player.OnStatChanged?.Invoke();
         CloseButtonUI();
     }
 

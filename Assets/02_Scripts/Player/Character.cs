@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class Character : MonoBehaviour
 {
-    public event Action OnInfoChanged;
-    public event Action OnStatChanged;
+    public Action OnInfoChanged;
+    public Action OnStatChanged;
 
     public Action addItem;
     public ItemData itemData;
@@ -33,4 +33,16 @@ public class Character : MonoBehaviour
         OnInfoChanged?.Invoke();
         OnStatChanged?.Invoke();
     }
+
+    public void AddAttack(float value) => attack += value;
+    public void RemoveAttack(float value) => attack -= value;
+
+    public void AddDefense(float value) => defense += value;
+    public void RemoveDefense(float value) => defense -= value;
+
+    public void AddHp(float value) => hp += value;
+    public void RemoveHp(float value) => hp -= value;
+
+    public void AddCrit(float value) => crit += value;
+    public void RemoveCrit(float value) => crit -= value;
 }
