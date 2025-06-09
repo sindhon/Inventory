@@ -11,6 +11,10 @@ public class UIInventory : MonoBehaviour
     [SerializeField] private GameObject slotPrefab;
     private int slotCount = 9;
 
+    ItemData selectedItem;
+    int selectedItemIndex = -1;
+    List<int> curEquipIndexes = new List<int>();
+
     private void Start()
     {
         for (int i = 0; i < slotCount; i++)
@@ -22,19 +26,12 @@ public class UIInventory : MonoBehaviour
             slots.Add(newSlot);
         }
 
+        UpdateUI();
+
         BackButton.onClick.AddListener(CloseInventoryUI);
 
         GameManager.Instance.Player.addItem += AddItem;
     }
-
-    //private void Update()
-    //{
-    //    // 아이템이 기존 슬롯 개수보다 많아질 경우 AddSlots 호출
-    //    if ()
-    //    {
-    //        AddSlots();
-    //    }
-    //}
 
     public void CloseInventoryUI()
     {
@@ -62,19 +59,7 @@ public class UIInventory : MonoBehaviour
         GameManager.Instance.Player.itemData = null;
     }
 
-    public void AddSlots()
-    {
-        for (int i = 0; i < 3; i++)
-        {
-            GameObject slotObj = Instantiate(slotPrefab, slotPanel);
-            UISlot newSlot = slotObj.GetComponent<UISlot>();
-            newSlot.Index = slotCount;
-
-            slots.Add(newSlot);
-            slotCount++;
-        }
-    }
-
+    
     void UpdateUI()
     {
         for (int i = 0; i < slots.Count; i++)
@@ -90,6 +75,20 @@ public class UIInventory : MonoBehaviour
         }
     }
 
+    #region 슬롯 관련
+    public void AddSlots()
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            GameObject slotObj = Instantiate(slotPrefab, slotPanel);
+            UISlot newSlot = slotObj.GetComponent<UISlot>();
+            newSlot.Index = slotCount;
+
+            slots.Add(newSlot);
+            slotCount++;
+        }
+    }
+
     UISlot GetEmptySlot()
     {
         for (int i = 0; i < slots.Count; i++)
@@ -101,4 +100,58 @@ public class UIInventory : MonoBehaviour
         }
         return null;
     }
+    #endregion
+
+    #region 아이템 슬롯 선택
+    public void SelectItem(int index)
+    {
+        if (slots[index].item == null) return;
+
+        if (selectedItemIndex == index )
+        {
+            if (slots[index].Equipped)
+            {
+                UnEquip(index);
+                curEquipIndexes.Remove(index);
+                selectedItemIndex = -1;
+                selectedItem = null;
+            }
+            else
+            {
+                EquipItem();
+            }
+
+            return;
+        }
+
+        selectedItem = slots[index].item;
+        selectedItemIndex = index;
+    }
+    #endregion
+
+    #region 아이템 장착 관련
+    void EquipItem()
+    {
+        for (int i = 0; i < curEquipIndexes.Count; i++)
+        {
+            int equipIndex = curEquipIndexes[i];
+            if (slots[equipIndex].item.type == selectedItem.type)
+            {
+                UnEquip(equipIndex);
+                curEquipIndexes.RemoveAt(i);
+                break;
+            }
+        }
+
+        slots[selectedItemIndex].Equipped = true;
+        curEquipIndexes.Add(selectedItemIndex);
+        UpdateUI();
+    }
+
+    void UnEquip(int index)
+    {
+        slots[index].Equipped = false;
+        UpdateUI();
+    }
+    #endregion
 }

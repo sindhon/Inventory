@@ -13,6 +13,7 @@ public class UISlot : MonoBehaviour
     public ItemData item;
 
     public int Index { get { return index; } set { index = value; } }
+    public bool Equipped { get { return equipped; } set { equipped = value; } }
 
     private void Awake()
     {
@@ -27,10 +28,22 @@ public class UISlot : MonoBehaviour
     public void SetItem()
     {
         icon.gameObject.SetActive(true);    // 아이콘 활성화
+        icon.sprite = item.icon;
+
+        if (outline != null)
+        {
+            outline.enabled = equipped;
+        }
     }
 
     public void Refresh()
     {
+        item = null;
         icon.gameObject.SetActive(false);   // 아이콘 비활성화
+    }
+
+    public void OnClickButton()
+    {
+        UIManager.Instance.UIInventory.SelectItem(index);
     }
 }
