@@ -31,7 +31,7 @@ public class Character : MonoBehaviour
         OnStatChanged?.Invoke();
     }
 
-    private void Awake()
+    private void Start()
     {
         GameManager.Instance.Player = this;
     }
