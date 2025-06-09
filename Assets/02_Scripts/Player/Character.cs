@@ -6,6 +6,9 @@ public class Character : MonoBehaviour
     public event Action OnInfoChanged;
     public event Action OnStatChanged;
 
+    public Action addItem;
+    public ItemData itemData;
+
     public string playerName { get; private set; }
     public int level { get; private set; }
     public int exp {  get; private set; }
@@ -29,10 +32,5 @@ public class Character : MonoBehaviour
 
         OnInfoChanged?.Invoke();
         OnStatChanged?.Invoke();
-    }
-
-    private void Start()
-    {
-        GameManager.Instance.Player = this;
     }
 }

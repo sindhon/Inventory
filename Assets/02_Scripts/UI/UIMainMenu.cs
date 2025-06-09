@@ -1,8 +1,6 @@
-﻿using System.Numerics;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class UIMainMenu : MonoBehaviour
 {
@@ -14,6 +12,7 @@ public class UIMainMenu : MonoBehaviour
     [SerializeField] private TextMeshProUGUI levelText;
     [SerializeField] private TextMeshProUGUI expText;
     [SerializeField] private Image uiBar;
+    [SerializeField] private ItemData[] items;
 
     private void Start()
     {
@@ -75,6 +74,15 @@ public class UIMainMenu : MonoBehaviour
         var player = GameManager.Instance.Player;
         expText.text = $"{player.exp} / {player.requiredExp}";
         uiBar.fillAmount = (float )player.exp / player.requiredExp;
+    }
+    #endregion
+
+    #region 아이템 추가 버튼
+    public void AddItemBtn()
+    {
+        var randomItem = items[Random.Range(0, items.Length)];
+        GameManager.Instance.Player.itemData = randomItem;
+        GameManager.Instance.Player.addItem?.Invoke();
     }
     #endregion
 }
