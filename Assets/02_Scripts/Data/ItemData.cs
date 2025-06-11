@@ -10,10 +10,10 @@ public enum ItemStatType
     Crit
 }
 
-public enum ItemType
+public enum ItemType 
 {
-    Atk,
-    Def
+    Atk,    // 무기
+    Def     // 방어구
 }
 
 [System.Serializable]
@@ -32,7 +32,7 @@ public class ItemData : ScriptableObject
     public Sprite icon;         // 아이템 아이콘
 
     [Header("ItemType")]
-    public ItemType type;       // 아이템 타입 (무기 / 방어구)
+    public ItemType type;       // 아이템 타입 
 
     [Header("ItemStat")]
     public ItemStat[] stats;    // 장비 시 상승하는 스텟
